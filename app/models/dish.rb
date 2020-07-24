@@ -11,4 +11,7 @@ class Dish <ApplicationRecord
     end
   end
 
+  def add_ingredient(ingredient)
+    ingredients << ingredient
+  end
 end
