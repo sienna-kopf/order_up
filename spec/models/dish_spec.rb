@@ -16,13 +16,24 @@ RSpec.describe Dish, type: :model do
   describe "methods" do
     before :each do
       @chef = Chef.create!(name: "Gordon Ramsey")
-      @grilled_cheese = @chef.dishes.create!(name: "Grilled Cheese", description: "Toasted cheese filled sandwich")
-      @cheese = @grilled_cheese.ingredients.create!(name: "Sliced Cheese", calories: 250)
-      @bread = @grilled_cheese.ingredients.create!(name: "Brioche Bread", calories: 300)
+
+      @chicken_nuggets = @chef.dishes.create!(name: "Chicken Nuggets", description: "Breaded Fried Chicken Pieces")
+      @chicken = @chicken_nuggets.ingredients.create!(name: "Chicken", calories: 150)
+      @sesame_chicken = @chef.dishes.create!(name: "Sesame Chicken", description: "Chicken flavored with Soy Glaze and coated with sesame seeds")
+      @sesame = @sesame_chicken.ingredients.create!(name: "Sesame Seeds", calories: 10)
+      @soy_sauce = @sesame_chicken.ingredients.create!(name: "Soy Sauce", calories: 50)
+    end
+
+    it "#add_ingredient" do
+      expect(@sesame_chicken.ingredients).to eq([@sesame, @soy_sauce])
+
+      @sesame_chicken.add_ingredient(@chicken)
+      expect(@sesame_chicken.ingredients).to eq([@sesame, @soy_sauce, @chicken])
     end
 
     it "#total_calories" do
-      expect(@grilled_cheese.total_calories).to eq(550)
+      @sesame_chicken.add_ingredient(@chicken)
+      expect(@sesame_chicken.total_calories).to eq(210)
     end
   end
 end
