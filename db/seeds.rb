@@ -7,7 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-chef = Chef.create!(name: "Gordon Ramsey")
-grilled_cheese = chef.dishes.create!(name: "Grilled Cheese", description: "Toasted cheese filled sandwich")
-cheese = grilled_cheese.ingredients.create!(name: "Sliced Cheese", calories: 250)
-bread = grilled_cheese.ingredients.create!(name: "Brioche Bread", calories: 300)
+@chef = Chef.create!(name: "Gordon Ramsey")
+
+@chicken_nuggets = @chef.dishes.create!(name: "Chicken Nuggets", description: "Breaded Fried Chicken Pieces")
+@chicken = @chicken_nuggets.ingredients.create!(name: "Chicken", calories: 150)
+@sesame_chicken = @chef.dishes.create!(name: "Sesame Chicken", description: "Chicken flavored with Soy Glaze and coated with sesame seeds")
+@sesame = @sesame_chicken.ingredients.create!(name: "Sesame Seeds", calories: 10)
+@soy_sauce = @sesame_chicken.ingredients.create!(name: "Soy Sauce", calories: 50)
+@chicken_parm = @chef.dishes.create!(name: "Chicken Parmesan", description: "Baked Chicken Breaded with Parmesan Cheese")
+
+@sesame_chicken.add_ingredient(@chicken)
+@chicken_nuggets.add_ingredient(@soy_sauce)
+@chicken_parm.add_ingredient(@chicken)
